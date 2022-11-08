@@ -7,5 +7,5 @@ setup(
     author="waifusempire",
     package=["tear"],
     py_modules=["tear"],
-    package_dir={"": "tear"},
+    package_dir={"tear": ""},
 )
