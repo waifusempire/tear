@@ -1,13 +1,15 @@
-import toml
+import subprocess
 import sys
+try:
+    import toml
+except ImportError:
+    subprocess.run(["pip" if sys.platform == "win32" or sys.platform == "win64" else "pip3", "install", "toml"])
+finally:
+    if not "toml" in globals():
+        import toml
 import pathlib
 from .cmdparser import command_parser
 from typing import Optional
-import subprocess
-
-
-def path_to_str(path: pathlib.Path):
-    return str(path.resolve())
 
 
 def new_project(path: pathlib.Path, name: str):
@@ -23,7 +25,7 @@ def new_project(path: pathlib.Path, name: str):
                 },
                 "python": {"path": "{python}", "options": []},
                 "module": {"name": "main", "args": []},
-                "scripts": {}
+                "scripts": {},
             },
             file,
         )
@@ -42,7 +44,7 @@ if __name__ == "__main__":
 """
         )
 
-        
+
 def run(script: Optional[str] = None):
     with open("tear.pyproj.toml") as config:
         data = toml.load(config)
